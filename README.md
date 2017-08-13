@@ -17,5 +17,5 @@ $ python memeGenerator.py /path/to/image.png
 ```
 
 # Example
-[[https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/mrwonderful.jpg|alt=mrwonderful]]
-[[https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/cuban.jpg|alt=markcuban]]
+![alt text](https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/mrwonderful.jpg)
+![alt text](https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/cuban.jpg)
