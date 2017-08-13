@@ -15,3 +15,7 @@ $ sudo pip install image
 ```sh
 $ python memeGenerator.py /path/to/image.png
 ```
+
+# Example
+[[https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/mrwonderful.jpg|alt=mrwonderful]]
+[[https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/cuban.jpg|alt=markcuban]]
