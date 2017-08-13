@@ -4,17 +4,18 @@ from PIL import ImageDraw
 import sys
 import os
 import time
+import textwrap
 
 def getTopText() :
-	topText = input("Enter the top text (maximum 32 characters) : ")
-	if len(topText) > 32 :
+	topText = input("Enter the top text (maximum 60 characters) : ")
+	if len(topText) > 60 :
 		print("The top text length is "+str(len(topText))+". Enter new top text again.")
 		return None
 	else :
 		return topText
 def getBottomText() :
-	bottomText = input("Enter the bottom text (maximum 32 characters) : ")
-	if len(bottomText) > 32 :
+	bottomText = input("Enter the bottom text (maximum 60 characters) : ")
+	if len(bottomText) > 60 :
 		print("The bottom text length is "+str(len(bottomText))+". Enter new bottom text again.")
 		return None
 	else :
@@ -35,10 +36,14 @@ if len(sys.argv) > 1 :
 				topText = getTopText()
 			topText = topText.upper()
 
+			topParagraph = textwrap.wrap(topText, width=25)
+
 			bottomText = getBottomText()
 			while (bottomText == None) :
 				bottomText = getBottomText()
 			bottomText = bottomText.upper()
+
+			bottomParagraph = textwrap.wrap(bottomText, width=25)
 
 			saveToFolder = os.path.dirname(os.path.realpath(__file__))
 			filename = str(round(time.time()))+"-"+os.path.basename(sys.argv[1])
@@ -50,30 +55,44 @@ if len(sys.argv) > 1 :
 
 			draw = ImageDraw.Draw(img)
 			font = ImageFont.truetype("/Library/Fonts/Impact.ttf", 40)
-			textWidthTop, texHeightTop = draw.textsize(topText, font=font)
-			centerXTop = (minimumWidth - textWidthTop) / 2
 
-			# black stroke for top text
-			draw.text((centerXTop - 2, -2), topText, (0, 0, 0), font=font)
-			draw.text((centerXTop + 2, -2), topText, (0, 0, 0), font=font)
-			draw.text((centerXTop - 2, 2), topText, (0, 0, 0), font=font)
-			draw.text((centerXTop + 2, 2), topText, (0, 0, 0), font=font)
+			# top text
+			topY = 0
+			for topLine in topParagraph :
+				textWidthTop, texHeightTop = draw.textsize(topLine, font=font)
+				centerXTop = (minimumWidth - textWidthTop) / 2
 
-			# white top text
-			draw.text((centerXTop, 0), topText, (255, 255, 255), font=font)
+				# black stroke for top text
+				draw.text((centerXTop - 2, topY - 2), topLine, (0, 0, 0), font=font)
+				draw.text((centerXTop + 2, topY - 2), topLine, (0, 0, 0), font=font)
+				draw.text((centerXTop - 2, topY + 2), topLine, (0, 0, 0), font=font)
+				draw.text((centerXTop + 2, topY + 2), topLine, (0, 0, 0), font=font)
 
-			bottomY = hsize - 10 - 40
-			textWidthBottom, texHeightBottom = draw.textsize(bottomText, font=font)
-			centerXBottom = (minimumWidth - textWidthBottom) / 2
+				# white top text
+				draw.text((centerXTop, topY), topLine, (255, 255, 255), font=font)
+				topY += 40
 
-			# black stroke for bottom text
-			draw.text((centerXBottom - 2, bottomY - 2), bottomText, (0, 0, 0), font=font)
-			draw.text((centerXBottom + 2, bottomY- 2), bottomText, (0, 0, 0), font=font)
-			draw.text((centerXBottom - 2, bottomY + 2), bottomText, (0, 0, 0), font=font)
-			draw.text((centerXBottom + 2, bottomY + 2), bottomText, (0, 0, 0), font=font)
+			if len(bottomText) >= 50 :
+				bottomY = hsize - 10 - 120 # 3 line text
+			elif len(bottomText) >= 25 and len(bottomText) < 50  :
+				bottomY = hsize - 10 - 80 # 2 line text
+			else :
+				bottomY = hsize - 10 - 40 # 1 line text
 
-			# white bottom text
-			draw.text((centerXBottom, bottomY), bottomText, (255, 255, 255), font=font)
+			# bottom text
+			for bottomLine in bottomParagraph :
+				textWidthBottom, texHeightBottom = draw.textsize(bottomLine, font=font)
+				centerXBottom = (minimumWidth - textWidthBottom) / 2
+
+				# black stroke for bottom text
+				draw.text((centerXBottom - 2, bottomY - 2), bottomLine, (0, 0, 0), font=font)
+				draw.text((centerXBottom + 2, bottomY - 2), bottomLine, (0, 0, 0), font=font)
+				draw.text((centerXBottom - 2, bottomY + 2), bottomLine, (0, 0, 0), font=font)
+				draw.text((centerXBottom + 2, bottomY + 2), bottomLine, (0, 0, 0), font=font)
+
+				# white bottom text
+				draw.text((centerXBottom, bottomY), bottomLine, (255, 255, 255), font=font)
+				bottomY += 40
 
 			img.save(filename)
 			print("Success - the meme file was saved to "+saveToFolder+"/"+filename)
