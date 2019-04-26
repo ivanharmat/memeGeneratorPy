@@ -6,9 +6,11 @@ Requirements :
  * python 3
  * works only on Macs for now
  * the most common meme font - Impact - /Library/Fonts/Impact.ttf
- * PIL module for image manipulation - install if you don't have it
+ * see the requirements.txt file for more info
+
+# Installation
 ```sh
-$ sudo pip install image
+$ pip install -r requirements.txt
 ```
 
 # Usage
@@ -17,5 +19,5 @@ $ python memeGenerator.py /path/to/image.png
 ```
 
 # Example
-![alt text](https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/mrwonderful.jpg)
-![alt text](https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/cuban.jpg)
+![alt text](https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/examples/mrwonderful.jpg)
+![alt text](https://raw.githubusercontent.com/ivanharmat/memeGeneratorPy/master/examples/cuban.jpg)
